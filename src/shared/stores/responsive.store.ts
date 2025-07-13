@@ -1,0 +1,61 @@
+'use client';
+import { throttle } from 'lodash-es';
+import { useLayoutEffect } from 'react';
+import { create } from 'zustand/react';
+
+
+const DEFAULT_STATE = {
+  isSm: false, isMaxSm: true,
+  isMd: false, isMaxMd: true,
+  isLg: false, isMaxLg: true,
+  isXl: false, isMaxXl: true,
+  is2Xl: false, isMax2Xl: true,
+};
+
+type State = typeof DEFAULT_STATE;
+type Actions = { update: VoidFunction }
+
+
+const useResponsiveStore = create<State & Actions>()((set) => ({
+  ...DEFAULT_STATE,
+  update: () => set(getBreakpoints()),
+}));
+
+export const useIsSm = () => useResponsiveStore(state => state.isSm);
+
+
+const gte = (breakpoint: number) => window.innerWidth >= breakpoint;
+const getBreakpoints = (): State => {
+  const REM = parseFloat(getComputedStyle(document.documentElement).fontSize);
+
+  // https://tailwindcss.com/docs/responsive-design
+  const isSm = gte(40 * REM);
+  const isMd = gte(48 * REM);
+  const isLg = gte(64 * REM);
+  const isXl = gte(80 * REM);
+  const is2Xl = gte(96 * REM);
+
+  return ({
+    isSm, isMaxSm: !isSm,
+    isMd, isMaxMd: !isMd,
+    isLg, isMaxLg: !isLg,
+    isXl, isMaxXl: !isXl,
+    is2Xl, isMax2Xl: !is2Xl,
+  });
+};
+
+
+export function ResponsiveStoreEngine() {
+  const update = useResponsiveStore(state => state.update);
+
+  useLayoutEffect(() => {
+    const onWindowResize = throttle(update, 150);
+
+    onWindowResize();
+    window.addEventListener('resize', onWindowResize);
+
+    return () => window.removeEventListener('resize', onWindowResize);
+  }, [update]);
+
+  return null;
+}
