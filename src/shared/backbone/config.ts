@@ -1,7 +1,9 @@
 export const CONFIG = {
-  APP_UNIQUE_KEY: '__X402_RS__',
+  appUniqueKey: '__X402_RS__',
   isClient: typeof window !== 'undefined',
   isServer: typeof window === 'undefined',
+  base: process.env.BASE_PATH as string || '/',
+
   facilitatorUrl: new URL('https://facilitator.x402.rs'),
 
   contacts: {
@@ -10,6 +12,4 @@ export const CONFIG = {
     githubUrl: new URL('https://github.com/x402-rs'),
     email: 'hello@x402.rs',
   },
-
-  base: process.env.BASE_PATH as string || '/',
 };

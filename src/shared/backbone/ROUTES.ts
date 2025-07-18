@@ -1,3 +1,7 @@
+import { Elements } from '@/shared/constants/elements';
+
+
 export const ROUTES = {
-  HOME: '/',
+  Home: '/',
+  HomeStayInTheLoop: `/#${Elements.StayInTheLoop}`,
 };

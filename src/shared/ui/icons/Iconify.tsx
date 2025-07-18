@@ -17,6 +17,7 @@ export enum Icon {
 
   ExternalLink = 'lucide--external-link',
   ArrowRight = 'solar--arrow-right-outline',
+  ArrowDown = 'solar--alt-arrow-down-linear',
 
   Server = 'solar--server-2-bold',
   Letter = 'solar--letter-bold-duotone',
@@ -58,4 +59,3 @@ export function Iconify({ className, icon, isColored, ...props }: IconifyProps) 
     )} {...props} />
   );
 }
-

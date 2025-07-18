@@ -7,6 +7,7 @@
     "build": "concurrently --kill-others-on-fail -n lint,typecheck,build -c magenta,cyan,white \"bun lint\" \"bun typecheck\" \"next build\"",
     "build:github": "rm -rf out && cross-env NEXT_PUBLIC_BUILD_FOR=github bun run build",
     "start": "next start",
+    "checks": "concurrently -n lint,typecheck -c magenta,cyan \"bun lint\" \"bun typecheck\"",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src --cache --report-unused-disable-directives --max-warnings 0"
   },

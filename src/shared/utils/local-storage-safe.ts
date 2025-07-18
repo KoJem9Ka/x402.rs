@@ -3,6 +3,6 @@ import { makeLocalStorageSafe } from '@/shared/utils/independent/make-local-stor
 import { Theme } from '@/shared/types/theme';
 
 
-export const localStorageSafe = makeLocalStorageSafe(CONFIG.APP_UNIQUE_KEY, {
+export const localStorageSafe = makeLocalStorageSafe(CONFIG.appUniqueKey, {
   theme: Theme,
 });

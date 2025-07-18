@@ -1,8 +1,9 @@
+'use client';
+
 import { Container } from '@/shared/ui/Container';
 import { SectionHeading } from '@/features/landing/SectionHeading';
 import { cn } from '@/shared/utils/cn';
 import type { ComponentProps } from 'react';
-import { Chip } from '@heroui/chip';
 import { Button } from '@heroui/button';
 import { Icon, Iconify } from '@/shared/ui/icons/Iconify';
 import { Link } from '@heroui/link';
@@ -10,35 +11,38 @@ import { CardBody, CardHeader } from '@heroui/card';
 import { Divider } from '@heroui/divider';
 import { EldoraCard } from '@/shared/ui/EldoraCard';
 import { CARD_WIDE_DIVIDERS } from '@/shared/ui/heroui/Card';
-import { CHAINS_SUPPORTED } from '@/features/landing/constants/supported-chains';
 import { CONFIG } from '@/shared/backbone/config';
-import { clsx } from 'clsx';
 import { IconSplit } from '@/shared/ui/icons/IconSplit';
+import { useIsSm } from '@/shared/stores/responsive.store';
+import { ChainsSupported } from '@/features/landing/ChainsSupported';
+import { PaperWithBloom } from '@/shared/ui/PaperWithBloom';
 
 
 export function Section3WhatYouGet({ className, ...props }: ComponentProps<'div'>) {
+  const isSm = useIsSm();
+
   return (
     <Container className={cn(className)} {...props}>
-      <SectionHeading>
-        {'What you get with '}
-        <span className='neon-text'>x402.rs</span>
-      </SectionHeading>
+      <SectionHeading>What you get with x402.rs</SectionHeading>
 
       <div className='space-y-6'>
         <EldoraCard classNames={CARD_WIDE_DIVIDERS}>
-          <CardHeader className='justify-between'>
-            <div className='flex items-center gap-3'>
-              <div className='flex justify-center items-center p-3 rounded-small bg-foreground-200 neon-bg text-white'>
+          <CardHeader className='items-start max-sm:flex-col gap-3'>
+            <div className='sm:grow flex items-center gap-3'>
+              <PaperWithBloom className='p-3'>
                 <Iconify icon={Icon.Server} />
-              </div>
-              <h3 className='text-3xl font-bold'>Hosted Facilitator</h3>
+              </PaperWithBloom>
+
+              <h3 className='text-xl sm:text-3xl font-bold'>Hosted Facilitator</h3>
             </div>
 
             <Button
               as='a'
               href={CONFIG.facilitatorUrl.href}
               target='_blank'
-              className='group/btn shrink-0'
+              size={isSm ? 'md' : 'sm'}
+              fullWidth={!isSm}
+              className='group/btn shrink-0 ml-auto'
               variant='shadow'
               color='primary'
               endContent={<Iconify className='group-hover/btn:translate-x-1 transition size-5' icon={Icon.ArrowRight} />}
@@ -50,7 +54,7 @@ export function Section3WhatYouGet({ className, ...props }: ComponentProps<'div'
           <CardBody className='grid lg:grid-cols-2 gap-6'>
             <div className='flex flex-col gap-1 justify-between'>
               <p className='font-semibold text-xl'>Public, open, production-grade x402 facilitator, ready for use from any stack: JS, Go, Rust, curl.</p>
-              <p>Built by early contributors to x402 ecosystem.</p>
+              <p className='text-foreground-500'>Built by early contributors to x402 ecosystem.</p>
               <div className='grow' />
               <p>
                 <Link className='link' target='_blank' href={CONFIG.facilitatorUrl.href}>
@@ -62,14 +66,7 @@ export function Section3WhatYouGet({ className, ...props }: ComponentProps<'div'
             <div className='space-y-3'>
               <p className='font-semibold'>Chains supported:</p>
 
-              <div className='grid grid-cols-2 sm:grid-cols-3 gap-[1ch]'>
-                {CHAINS_SUPPORTED.map((chain) => (
-                  <Chip className={clsx('text-center max-w-none rounded-small border shadow-small', chain.isSoon ? 'border-default bg-default-100' : 'border-success bg-success-100 shadow-success-500')} key={chain.name}>
-                    <span>{chain.name}</span>
-                    {chain.isSoon ? <sup className='text-foreground/50'>{' (soon)'}</sup> : null}
-                  </Chip>
-                ))}
-              </div>
+              <ChainsSupported className='grid grid-cols-2 sm:grid-cols-3 gap-2 max-sm:text-smal' isWithLabel />
 
               <p className='text-balance text-center'>
                 <Link className='link lg:right-0' href={`mailto:${CONFIG.contacts.email}`}>
@@ -83,11 +80,11 @@ export function Section3WhatYouGet({ className, ...props }: ComponentProps<'div'
         <EldoraCard classNames={CARD_WIDE_DIVIDERS}>
           <CardHeader>
             <div className='flex items-center gap-3'>
-              <div className='flex justify-center items-center p-3 rounded-small bg-foreground-200 neon-bg text-white'>
+              <PaperWithBloom className='p-3'>
                 <Iconify icon={Icon.Middleware} />
-              </div>
-              {/*<Image src={RustCrabSvg} alt='' className='size-12' />*/}
-              <h3 className='text-3xl font-bold'>Rust middleware</h3>
+              </PaperWithBloom>
+
+              <h3 className='text-xl sm:text-3xl font-bold'>Rust middleware</h3>
             </div>
           </CardHeader>
 
@@ -96,7 +93,7 @@ export function Section3WhatYouGet({ className, ...props }: ComponentProps<'div'
           <CardBody className='grid lg:grid-cols-2 gap-3 lg:gap-6 md:text-justify'>
             <div className='space-y-1'>
               <h4 className='font-semibold text-xl'>Send payment with Reqwest</h4>
-              <p>Use Reqwest client middleware in Rust to send x402 payments. Supports custom logic for key management, token selection, and value caps. Bring your own signer.</p>
+              <p>Use Reqwest client middleware to send x402 payments. Supports custom logic for key management, token selection, and value caps. Bring your own signer.</p>
             </div>
 
             <div className='space-y-1'>
@@ -109,12 +106,13 @@ export function Section3WhatYouGet({ className, ...props }: ComponentProps<'div'
         <EldoraCard classNames={CARD_WIDE_DIVIDERS}>
           <CardHeader>
             <div className='flex items-center gap-3'>
-              <div className='flex justify-center items-center p-3 rounded-small bg-foreground-200 neon-bg text-white'>
+              <PaperWithBloom className='p-3'>
                 <IconSplit />
-              </div>
-              <h3 className='text-3xl font-bold'>
+              </PaperWithBloom>
+
+              <h3 className='text-xl sm:text-3xl font-bold'>
                 Split payments{' '}
-                <span className='font-normal text-foreground/50'><sup>(soon)</sup></span>
+                <sup className='font-normal text-foreground/50'>(soon)</sup>
               </h3>
             </div>
           </CardHeader>

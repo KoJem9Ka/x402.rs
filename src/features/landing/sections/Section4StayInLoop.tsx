@@ -6,22 +6,18 @@ import { EldoraCard } from '@/shared/ui/EldoraCard';
 import { CardBody, CardFooter, CardHeader } from '@heroui/card';
 import { Link } from '@heroui/link';
 import { Icon, Iconify } from '@/shared/ui/icons/Iconify';
-import { Tooltip } from '@heroui/tooltip';
 import { CARD_WIDE } from '@/shared/ui/heroui/Card';
 import { Button } from '@heroui/button';
 import { CONFIG } from '@/shared/backbone/config';
-import { IconBlockchainXDC } from '@/shared/ui/icons/IconBlockchainXDC';
 import { NewsletterForm } from '@/features/landing/newsletter/NewsletterForm';
-import { IconBlockchainOptimism } from '@/shared/ui/icons/IconBlockchainOptimism';
+import { ChainsSupported } from '@/features/landing/ChainsSupported';
+import { Elements } from '@/shared/constants/elements';
 
 
 export function Section4StayInLoop({ className, ...props }: ComponentProps<'div'>) {
   return (
     <Container className={cn(className)} {...props}>
-      <SectionHeading>
-        {'Stay in the '}
-        <span className='neon-text'>loop</span>
-      </SectionHeading>
+      <SectionHeading id={Elements.StayInTheLoop}>Stay in the loop</SectionHeading>
 
       <div className='grid md:grid-cols-2 gap-6'>
         <EldoraCard classNames={CARD_WIDE} className='text-center'>
@@ -36,26 +32,7 @@ export function Section4StayInLoop({ className, ...props }: ComponentProps<'div'
               {' '}for any chain:
             </p>
 
-            <div className='flex mx-auto gap-1'>
-              <Tooltip content='Base'>
-                <div className='p-2 bg-foreground-200 rounded-small flex'><Iconify isColored icon={Icon.BlockchainBase} /></div>
-              </Tooltip>
-              <Tooltip content='Avalanche'>
-                <div className='p-2 bg-foreground-200 rounded-small flex'><Iconify isColored icon={Icon.BlockchainAvalanche} /></div>
-              </Tooltip>
-              <Tooltip content='XDC'>
-                <div className='p-2 bg-foreground-200 rounded-small flex'><IconBlockchainXDC /></div>
-              </Tooltip>
-              <Tooltip content='Arbitrum (soon)'>
-                <div className='p-2 bg-foreground-200 rounded-small flex opacity-50'><Iconify isColored icon={Icon.BlockchainArbitrum} /></div>
-              </Tooltip>
-              <Tooltip content='Solana (soon)'>
-                <div className='p-2 bg-foreground-200 rounded-small flex opacity-50'><Iconify isColored icon={Icon.BlockchainSolana} /></div>
-              </Tooltip>
-              <Tooltip content='Optimism (soon)'>
-                <div className='p-2 bg-foreground-200 rounded-small flex opacity-50'><IconBlockchainOptimism /></div>
-              </Tooltip>
-            </div>
+            <ChainsSupported />
           </CardBody>
 
           <CardFooter>

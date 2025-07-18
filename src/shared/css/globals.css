@@ -9,6 +9,10 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
+  --font-sans-base  : ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-serif-base : ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+  --font-mono-base  : ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+
   --animate-shimmer : shimmer 5s ease infinite;
   @keyframes shimmer {
     0% { background-position-x : 150%; }
@@ -17,31 +21,23 @@
   }
 }
 
+@theme inline {
+  --spacing-header : var(--header-height);
+  --font-geologica : var(--font-geologica-raw);
+  --font-sans      : var(--font-geologica-raw);
+}
+
 @layer base {
-  * {
-    scrollbar-width : thin;
-  }
+  * { scrollbar-width : thin }
 
-  .floating-animation {
-    animation : float 6s ease-in-out infinite;
-  }
-
-  .neon-text {
-    @apply bg-gradient-to-br from-pink-500 to-blue-500 bg-clip-text text-transparent;
-  }
-
-  .neon-bg {
-    @apply bg-gradient-to-br from-pink-500 to-blue-500;
-  }
+  .floating-animation { animation : float 6s ease-in-out infinite }
 
   @keyframes float {
     0%, 100% { transform : translateY(0px); }
-    50% { transform : translateY(-20px); }
+    50% { transform : translateY(-40px); }
   }
 
-  .min-height-screen {
-    @apply min-h-svh not-supports-[min-height:100svh]:min-h-screen;
-  }
+  .min-height-screen { @apply min-h-svh not-supports-[min-height:100svh]:min-h-screen }
 
   .neon-border-card {
     @apply relative;
@@ -66,7 +62,8 @@
 }
 
 :root, .light {
-  color-scheme : light;
+  color-scheme    : light;
+  --header-height : 64px;
 }
 
 .dark {
