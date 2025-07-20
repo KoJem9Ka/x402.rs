@@ -5,7 +5,7 @@ export const CONFIG = {
   base: process.env.BASE_PATH as string || '/',
 
   facilitatorUrl: new URL('https://facilitator.x402.rs'),
-
+  emailFormKitId: '8331614',
   contacts: {
     telegramUrl: new URL('https://t.me/x402rs'),
     twitterUrl: new URL('https://x.com/x402rs'),

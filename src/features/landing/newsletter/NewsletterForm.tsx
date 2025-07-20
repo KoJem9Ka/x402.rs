@@ -4,6 +4,7 @@ import { Button } from '@heroui/button';
 import { useSubscribeToNewsletterMutation } from '@/features/landing/newsletter/useSubscribeToNewsletterMutation';
 import { type ComponentProps, type FormEvent, useRef, useState } from 'react';
 import { cn } from '@/shared/utils/cn';
+import { Alert } from '@heroui/alert';
 
 
 export function NewsletterForm({ className, ...props }: ComponentProps<'form'>) {
@@ -17,6 +18,7 @@ export function NewsletterForm({ className, ...props }: ComponentProps<'form'>) 
   };
 
   const isValid = !!email && !!inputRef.current?.validity.valid;
+  const isEmailSame = m.isSuccess && m.variables === email;
 
   return (
     <form onSubmit={onSubmit} className={cn('grid grid-cols-[1fr_auto]', className)} {...props}>
@@ -33,11 +35,17 @@ export function NewsletterForm({ className, ...props }: ComponentProps<'form'>) 
 
       <Button
         type='submit'
-        color='primary'
+        color={isEmailSame ? 'success' : 'primary'}
         variant='shadow'
         isLoading={m.isPending}
-        isDisabled={m.isSuccess && m.variables === email || !isValid}
-      >Subscribe</Button>
+        isDisabled={isEmailSame || !isValid}
+      >{isEmailSame ? 'Success!' : 'Subscribe'}</Button>
+
+      {m.isError && (
+        <Alert color='danger' variant='faded' className='col-span-full'>
+          {'Error while subscribing: '}{m.error.message}
+        </Alert>
+      )}
     </form>
   );
 }
